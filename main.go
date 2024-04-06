@@ -26,6 +26,7 @@ func multiply(a, b int) int {
 }
 
 func lenAndUpper(name string) (int, string) {
+	defer fmt.Println("finished!") // defer: after function is done, run this line
 	return len(name), strings.ToUpper(name)
 }
 
