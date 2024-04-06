@@ -10,8 +10,8 @@ func main() {
 
 	const name string = "yj" // constant
 	// var companyName string = "awesome studio" // variable
-	companyName := "awesome studio" // variable
-	companyName = "not awesome studio" // reassign variable
+	// companyName := "awesome studio" // variable
+	// companyName = "not awesome studio" // reassign variable
 
 	fmt.Println(multiply(2, 3))
 
@@ -19,6 +19,10 @@ func main() {
 	fmt.Println(length, upperCaseName)
 
 	shoutOut("yj", "123", "7890")
+
+	totalNum := addAll(1, 2, 3, 4, 5)
+	fmt.Println(totalNum)
+
 }
 
 func multiply(a, b int) int {
@@ -32,4 +36,15 @@ func lenAndUpper(name string) (int, string) {
 
 func shoutOut(names ...string) {
 	fmt.Println(names)
+}
+
+func addAll(numbers ...int) int {
+	total := 0
+	// for i:=0; i<len(numbers); i++ {
+	// 	fmt.Println(numbers[i])
+	// }
+	for _, number := range numbers {
+		total += number
+	}
+	return total
 }
