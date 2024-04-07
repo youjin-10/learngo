@@ -48,3 +48,13 @@ func addAll(numbers ...int) int {
 	}
 	return total
 }
+
+// a function that decides the parameter age is able to drink alcohol or not
+func canIDrink(age int) bool {
+	// create a variable inside if statement
+	if koreanAge := age + 2; koreanAge < 18 {
+		return false
+	}
+	return true
+}
+
