@@ -13,12 +13,22 @@
 - \* \+ variable: "이 포인터가 무엇을 가리키고 있는지 보여줄게"
 - 이걸 알고 나니 아래 코드가 이해가지 않았음
 
-```Go
-func (a *Accounts) Deposit(amount int) {
-    a.balance += amount
-}
-```
+  ```Go
+  func (a *Accounts) Deposit(amount int) {
+      a.balance += amount
+  }
+  ```
 
 - `a *Accounts`의 a는 포인터이며 struct 필드인 balance에 접근하려면 \*a로 포인터가 가리키는 대상을 먼저 찾아야할 것 같은데 왜 그렇게 하지 않는지 궁금했음
 - 포인터로 struct에 접근하는 경우 Go가 알아서 포인터가 가리키는 객체에 접근하는 걸로 해석해서 처리함
 - 그래서 만약 \*a.balance 로 작성한다면 Go는 `a.balance`를 포인터로 보고 이것이 가리키는 것이 무엇인지 찾으려고 할 것임
+
+#### := operator
+
+- accounts 패키지에서 아래처럼 에러를 작성할 때 왜 `:=`라고 쓸 수 없는지 궁금했음
+
+  ```Go
+  var errNoMoney = errors.New("can't withdraw")
+  ```
+
+- `:=` operator는 함수 내부에서만 사용 가능함. `var errNoMoney` 는 패키지 레벨에서, 함수 바깥에서 선언되었기 때문.
