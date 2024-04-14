@@ -3,20 +3,24 @@ package main
 import (
 	"fmt"
 
-	"github.com/youjin-10/learngo/accounts"
+	"github.com/youjin-10/learngo/mydict"
 )
 
 func main() {
-	account := accounts.NewAccount("youjin")
-	fmt.Println(account.Owner())
-	account.Deposit(10)
-	fmt.Println(account.Balance())
-	err := account.Withdraw(25)
+	myDictionary := mydict.Dictionary{"first": "First word"}
+
+	word, err := myDictionary.Search("second")
 	if err != nil {
-		// log.Fatalln(err)
 		fmt.Println(err)
+	} else {
+		fmt.Println(word)
 	}
-	fmt.Println(account.Balance())
+	
+	err2 := myDictionary.Add("water", "something that you drink")
+	fmt.Println(err2)
+
+	
+
 }
 
 
