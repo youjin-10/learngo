@@ -1,26 +1,36 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/youjin-10/learngo/mydict"
+	"errors"
+	"net/http"
 )
 
+var errRequestFailed = errors.New("Request failed")
+
 func main() {
-	myDictionary := mydict.Dictionary{"first": "First word"}
-
-	word, err := myDictionary.Search("second")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(word)
+	urls := []string{
+		"https://www.google.com",
+		"https://www.facebook.com",
+		"https://www.youtube.com",
+		"https://www.amazon.com",
+		"https://www.instagram.com",
+		"https://www.linkedin.com",
+		"https://www.reddit.com",
 	}
-	
-	err2 := myDictionary.Add("water", "something that you drink")
-	fmt.Println(err2)
 
-	
+	for _, url := range urls {
+		hitUrl(url)
+	}
+}
 
+func hitUrl(url string) error {
+	resp, err := http.Get(url)
+	
+	if err != nil || resp.StatusCode >= 400 {
+		// handle error
+		return errRequestFailed
+	}
+	return nil
 }
 
 
