@@ -6,9 +6,17 @@ import (
 	"net/http"
 )
 
+type requestResult struct{
+	url string
+	status string
+}
+
 var errRequestFailed = errors.New("request failed")
 
 func main() {
+	//  create a channel
+	c := make(chan requestResult)
+
 	urls := []string{
 		"https://www.google.com",
 		"https://www.facebook.com",
@@ -20,28 +28,29 @@ func main() {
 	}
 
 	// an empty map
-	var results = make(map[string]string)
+	results := make(map[string]string)
 
 	for _, url := range urls {
-		result := "OK"
-		err := hitUrl(url)
-		if err != nil {
-			result = "FAILED"
-		}
-		results[url] = result
+		go hitUrl(url, c)
+	}
+
+	for i := 0; i < len(urls); i++ {
+		result := <-c // receiving from channel is blocking operation!!
+
+		results[result.url] = result.status
 	}
 
 	fmt.Println(results)
 }
 
-func hitUrl(url string) error {
+// send-only channel
+func hitUrl(url string, c chan<- requestResult) {
 	resp, err := http.Get(url)
-	
+	status := "OK"
 	if err != nil || resp.StatusCode >= 400 {
-		// handle error
-		return errRequestFailed
-	}
-	return nil
+		status = "FAILED"
+	} 
+	c <- requestResult{url: url, status: status}
 }
 
 
