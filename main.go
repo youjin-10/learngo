@@ -2,10 +2,11 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 )
 
-var errRequestFailed = errors.New("Request failed")
+var errRequestFailed = errors.New("request failed")
 
 func main() {
 	urls := []string{
@@ -18,9 +19,19 @@ func main() {
 		"https://www.reddit.com",
 	}
 
+	// an empty map
+	var results = make(map[string]string)
+
 	for _, url := range urls {
-		hitUrl(url)
+		result := "OK"
+		err := hitUrl(url)
+		if err != nil {
+			result = "FAILED"
+		}
+		results[url] = result
 	}
+
+	fmt.Println(results)
 }
 
 func hitUrl(url string) error {
