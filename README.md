@@ -1,4 +1,4 @@
-### Go를 학습하며 배운 점
+### Go를 학습하며 배운 점 (TIL with Go)
 
 #### single-file program & multi-file program
 
@@ -32,3 +32,16 @@
   ```
 
 - `:=` operator는 함수 내부에서만 사용 가능함. `var errNoMoney` 는 패키지 레벨에서, 함수 바깥에서 선언되었기 때문.
+
+#### closing Body of Response
+
+- `http` 패키지로 통신을 하면 `Response`가 리턴됨
+- 그 중에 `Body`가 있는데 스트림 형식이라 다 사용했으면 닫아줘야 함. (마치 수도꼭지를 언젠가 잠궈야 하는 것처럼)
+- 그래서 아래처럼 `defer` 키워드를 사용해서 해당 함수가 끝난 후 `Body`도 닫아주도록 한다.
+  ```Go
+  func getPages() {
+      // ... make a request, get a response ...
+      defer resp.Body.Close()
+      // ... read from resp.Body ...
+  }
+  ```
